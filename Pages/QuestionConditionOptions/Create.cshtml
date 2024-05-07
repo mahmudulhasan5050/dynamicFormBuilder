@@ -1,0 +1,47 @@
+﻿@page
+@model FormWizard.Pages.QuestionConditionOptions.CreateModel
+@{
+
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle" >
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="Index" asp-route-questionconditionid="@(ViewData["QuestionConditionId"])" asp-route-questionid="@(ViewData["QuestionId"])" asp-route-myformid="@ViewData["MyFormId"]"><strong>OPTIONS</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>NEW</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post">
+                        <input asp-for="questionConditionOption.QuestionConditionId" value="@(ViewData["QuestionConditionId"])" hidden />
+                        <div class="mb-3">
+                            <label asp-for="questionConditionOption.ConditionOptionText"></label>
+                            <input asp-for="questionConditionOption.ConditionOptionText" class="form-control" />
+                            <span asp-validation-for="questionConditionOption.ConditionOptionText" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="questionConditionOption.OptionValue"></label>
+                            <input asp-for="questionConditionOption.OptionValue" class="form-control" />
+                            <span asp-validation-for="questionConditionOption.OptionValue" class="text-danger"></span>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/NewItem.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>

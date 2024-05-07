@@ -1,0 +1,366 @@
+﻿@page
+@model FormWizard.Pages.Questions.IndexModel
+@{
+}
+<div class="container p-0">
+    <div class="col-xl-6 col-xxl-6 mx-auto">
+        <div class="row pt-4">
+            <div class="col-6 d-flex justify-content-start">
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb d-flex justify-content-start  align-middle">
+                        <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="/MyForms/index"><strong>FORM</strong></a></li>
+                        <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>QUESTIONS</strong></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <form method="post">
+                    <a class="btn btn btn-light bg-white btn-sm">
+                        <input type="checkbox" id="showAll" asp-for="ShowAll" />
+                        <label for="showAll">Show All</label>
+                    </a>
+                </form>
+                &nbsp
+                <form method="post">
+                    <a asp-page="/QuestionDragDrops/Index" asp-route-myformid="@Model.myFormId" class="btn btn-light bg-white btn-sm">
+                        <i class="bi bi-dice-3"></i>&nbsp;
+                        Sort
+                    </a>
+                </form>
+                &nbsp
+                <form>
+                    <a asp-page="create" asp-route-myformid="@Model.myFormId" class="btn btn-facebook btn-sm">
+                        <i class="bi bi-plus-circle"></i>&nbsp;
+                        Question
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var obj in Model.questions)
+{
+    <div class="col-xl-6 col-xxl-6 mx-auto">
+        <div class="card d-flex flex-column">
+            <div class="card-header m-0" style="padding-left: 20px; padding-right: 20px;">
+                <div class="card-actions float-end">
+                    <a asp-page="Edit" asp-route-questionid="@obj.Id">
+                        <i class="bi bi-pencil" style="font-size: 0.8rem; color: royalblue;"></i>
+                    </a>
+                    @*<div class="dropdown position-relative">
+                <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+                <i class="bi bi-three-dots align-middle" data-feather="more-horizontal" style="color:white;"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                <a asp-page="Edit" asp-route-questionid="@obj.Id" class="dropdown-item">
+                <i class="bi bi-pencil" style="font-size: 0.8rem; color: black;"></i>
+                Edit
+                </a>
+                <a asp-page="Delete" asp-route-questionid="@obj.Id" class="dropdown-item" hidden>
+                <i class="bi bi-trash-fill" style="font-size: 0.8rem; color: black;"></i>
+                Delete
+                </a>
+                if (obj.Type == FormWizard.Model.Question.QuestionType.radio || obj.Type == FormWizard.Model.Question.QuestionType.checkbox || obj.Type == FormWizard.Model.Question.QuestionType.list)
+                {
+                <a class="dropdown-item" asp-page="/QuestionOptions/Index" asp-route-questionid="@obj.Id" asp-route-questiontype="@obj.Type" asp-route-myformid="@Model.myFormId">
+                <i class="bi bi-list" style="font-size: 0.8rem; color: black;"></i>
+                Option Menu
+                </a>
+                }
+
+                @if (obj.Extension == true)
+                {
+                <a asp-page="/QuestionConditions/Index" asp-route-questionid="@obj.Id" asp-route-myformid="@Model.myFormId" class="dropdown-item">
+                <i class="bi bi-plus" style="font-size: 0.8rem; color: black;"></i>
+                Sub Question
+                </a>
+                }
+
+                </div>
+                </div>*@
+                </div>
+            </div>
+            <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                <div class="align-self-center w-100">
+                    @*Question Type "Text"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.text)
+                    {
+                        <div class="text-primary mb-3">
+                            <strong><label>@obj.QuestionText</label></strong>
+                            <input type="@obj.Type" class="form-control" disabled />
+
+                        </div>
+                    }
+                    @* Question type "Radio"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.radio)
+                    {
+                        <div class="text-primary mb-3">
+                            <p><strong>@obj.QuestionText</strong></p>
+                            @foreach (var option in Model.questionOptions)
+                            {
+                                if (option.QuestionId == obj.Id)
+                                {
+                                    <div class="text-muted form-check">
+                                        <label class="form-check-label">@option.OptionText</label>
+                                        <input class="form-check-input" type="@option.OptionType" value="@option.OptionValue" name="@option.OptionType" disabled />
+                                    </div>
+                                    @if (obj.Extension == true)
+                                    {
+                                        <div class="card p-2 border border-muted">
+                                            @foreach (var questionCondition in Model.questionConditions)
+                                            {
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.radio && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 25px;">
+                                                        <p>@questionCondition.QuestionText</p>
+                                                        @foreach (var conditionOption in Model.questionConditionOptions)
+                                                        {
+                                                            if (conditionOption.QuestionConditionId == questionCondition.Id)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                    <input class="form-check-input" type="@questionCondition.Type" value="@conditionOption.OptionValue" disabled />
+                                                                </div>
+                                                                <br />
+                                                            }
+                                                        }
+                                                    </div>
+
+                                                }
+                                                @if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.checkbox && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 25px;">
+                                                        <p>@questionCondition.QuestionText</p>
+                                                        @foreach (var conditionOption in Model.questionConditionOptions)
+                                                        {
+                                                            if (conditionOption.QuestionConditionId == questionCondition.Id)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                    <input class="form-check-input" type="@questionCondition.Type" value="@conditionOption.OptionValue" disabled />
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.text && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 25px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.date && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 25px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.number && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 25px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    }
+
+
+                                }
+                            }
+                            @if (obj.Extension == true)
+                            {
+                                <div class="row justify-content-end">
+                                    <div class="col-md-auto">
+                                        <a class="btn btn-primary btn-sm" asp-page="/QuestionConditions/Index" asp-route-questionid="@obj.Id" asp-route-myformid="@Model.myFormId">
+                                            Add Sub Question
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <br />
+
+                            <a class="btn btn-light bg-white btn-sm d-flex align-items-center justify-content-center" asp-page="/QuestionOptions/Index" asp-route-questionid="@obj.Id" asp-route-questiontype="@obj.Type" asp-route-myformid="@Model.myFormId">
+                                <i class="bi bi-plus-circle-dotted" style="font-size: 0.8rem; color: black;"></i>
+                                <span class="ms-2">Add options here</span>
+
+                            </a>
+                        </div>
+                    }
+                    @*Question type "Checkbox"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.checkbox)
+                    {
+                        <div class="mb-3">
+                            <p class="text-primary"><strong>@obj.QuestionText</strong></p>
+                            @foreach (var option in Model.questionOptions)
+                            {
+                                if (option.QuestionId == obj.Id)
+                                {
+                                    <div class="form-check">
+                                        <label class="form-check-label">@option.OptionText</label>
+                                        <input class="form-check-input" type="@option.OptionType" value="@option.OptionValue" name="@option.OptionType" disabled />
+                                    </div>
+                                }
+                            }
+
+                            <span asp-validation-for="@obj.QuestionText" class="text-danger"></span>
+                            <br />
+
+                            <a class="btn btn-light bg-white btn-sm d-flex align-items-center justify-content-center" asp-page="/QuestionOptions/Index" asp-route-questionid="@obj.Id" asp-route-questiontype="@obj.Type" asp-route-myformid="@Model.myFormId">
+                                <i class="bi bi-plus-circle-dotted" style="font-size: 0.8rem; color: black;"></i>&nbsp;
+                                Add options here
+
+                            </a>
+                        </div>
+                    }
+                    @*Question Type "number"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.number)
+                    {
+                        <div class="text-primary mb-3 drag-item cursor-move">
+                            <strong><label>@obj.QuestionText</label></strong>
+                            <input type="@obj.Type" class="form-control" disabled />
+                        </div>
+                    }
+                    @*Question Type "date"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.date)
+                    {
+                        <div class="text-primary mb-3">
+                            <strong><label>@obj.QuestionText</label></strong>
+                            <input type="@obj.Type" class="form-control" disabled />
+                        </div>
+                    }
+                    @*Question type "List"*@
+                    @if (obj.Type == FormWizard.Model.Question.QuestionType.list)
+                    {
+                        <div class="text-muted mb-3">
+                            <strong><label class="text-primary">@obj.QuestionText</label></strong>
+                            <select>
+                                <option disabled selected>--- Select Item ---</option>
+                            </select>
+                            <h5 class="text-muted mt-4">Options are listed below:</h5>
+                            @foreach (var option in Model.questionOptions)
+                            {
+                                if (option.QuestionId == obj.Id)
+                                {
+                                    <p value="@option.OptionValue" disabled>@option.OptionText</p>
+                                    @if (obj.Extension == true)
+                                    {
+                                        <div class="card p-2 mt-4 border border-muted">
+                                            @foreach (var questionCondition in Model.questionConditions)
+                                            {
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.radio && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 50px;">
+                                                        <p>@questionCondition.QuestionText</p>
+                                                        @foreach (var conditionOption in Model.questionConditionOptions)
+                                                        {
+                                                            if (conditionOption.QuestionConditionId == questionCondition.Id)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                    <input class="form-check-input" type="@questionCondition.Type" value="@conditionOption.OptionValue" disabled />
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                }
+                                                @if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.checkbox && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 50px;">
+                                                        <p>@questionCondition.QuestionText</p>
+                                                        @foreach (var conditionOption in Model.questionConditionOptions)
+                                                        {
+                                                            if (conditionOption.QuestionConditionId == questionCondition.Id)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                    <input class="form-check-input" type="@questionCondition.Type" value="@conditionOption.OptionValue" disabled />
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.text && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 50px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.date && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 50px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                if (questionCondition.Type == FormWizard.Model.QuestionCondition.QuestionType.number && option.OptionText == questionCondition.Value)
+                                                {
+                                                    <div class="text-muted mb-3" style="padding: 50px;">
+                                                        <div class="form-check">
+                                                            <label>@questionCondition.QuestionText</label>
+                                                            <input class="form-control" type="@questionCondition.Type" disabled />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    }
+
+                                }
+                            }
+                            @if (obj.Extension == true)
+                            {
+                                <div class="row justify-content-end">
+                                    <div class="col-md-auto">
+                                        <a class="btn btn-primary btn-sm" asp-page="/QuestionConditions/Index" asp-route-questionid="@obj.Id" asp-route-myformid="@Model.myFormId">
+                                            Add Sub Question
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <a class="btn btn-light bg-white btn-sm d-flex align-items-center justify-content-center mt-4" asp-page="/QuestionOptions/Index" asp-route-questionid="@obj.Id" asp-route-questiontype="@obj.Type" asp-route-myformid="@Model.myFormId">
+                                <i class="bi bi-plus-circle-dotted" style="font-size: 0.8rem; color: black;"></i>&nbsp;
+                                Add options here
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/app.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script>
+        $(function () {
+            $("#showAll").change(function () {
+                $(this).closest('form').submit();
+            })
+        })
+    </script>
+
+
+    }

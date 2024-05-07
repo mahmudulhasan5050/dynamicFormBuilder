@@ -1,0 +1,64 @@
+﻿@page
+@using FormWizard.Model;
+@model FormWizard.Pages.QuestionConditions.CreateModel
+@{
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle" >
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="Index" asp-route-question="@Model.questionId" asp-route-myformid="@Model.myFormId"><strong>SUB QUESTION</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>NEW</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="questionCondition.Value"></label>
+                            <select asp-for="questionCondition.Value" asp-items="@Model.optionList">
+                                <option disabled selected>--- Select Item ---</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="questionCondition.QuestionText"></label>
+                            <input asp-for="questionCondition.QuestionText" class="form-control" class="form-control" />
+                            <span asp-validation-for="questionCondition.QuestionText" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="questionCondition.QuestionDescription"></label>
+                            <input asp-for="questionCondition.QuestionDescription" class="form-control" class="form-control" />
+                            <span asp-validation-for="questionCondition.QuestionDescription" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="questionCondition.Type"></label>
+                            <select asp-for="questionCondition.Type" asp-items="Html.GetEnumSelectList<QuestionCondition.QuestionType>()" class="form-control">
+                                <option disabled selected>--- Select Item ---</option>
+                            </select>
+                        </div>
+@*                        <div class="mb-3">
+                            <input asp-for="questionCondition.IsRequired" class="form-check-input" />
+                            <label asp-for="questionCondition.IsRequired"></label>
+                            <span asp-validation-for="questionCondition.IsRequired" class="text-danger"></span>
+                        </div>*@
+                        <input asp-for="questionCondition.QuestionId" value="@Model.questionId" hidden />
+                        <div class="row justify-content-end">
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/NewItem.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>

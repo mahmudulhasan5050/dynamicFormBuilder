@@ -1,0 +1,75 @@
+﻿@page
+@model RegisterModel
+@{
+
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card p-3">
+            <br />
+            <div class="card-header">
+                <h6 class="card-subtitle text-muted">Are you new here? Please register:</h6>
+            </div>
+            <div class="card-body">
+                <section>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <p class="text-primary">Email</p>
+                        <div class="form-outline mb-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <p class="text-primary">Password</p>
+                        <div class="form-outline mb-4">
+                        <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <p class="text-primary">Confirm Password</p>
+                        <div class="form-outline mb-4">
+                        <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                        </div>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <!-- New dropdown for user role -->
+                        <p class="text-primary">Select Role</p>
+                        <div class="form-floating">
+                            <select asp-for="Input.Role" class="form-control">
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                            <span asp-validation-for="Input.Role" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div>
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-block">Register</button>
+                        </div>
+
+                    </form>
+                </section>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <br/>
+        <br/>
+        <br/>
+        <img src="~/images/Register.png" class="img-fluid m-auto display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

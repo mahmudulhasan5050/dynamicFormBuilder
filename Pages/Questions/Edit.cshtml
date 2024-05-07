@@ -1,0 +1,174 @@
+﻿@page
+@using FormWizard.Model;
+@model FormWizard.Pages.Questions.EditModel
+@{
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle">
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="/MyForms/index"><strong>FORM</strong></a></li>
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="Index" asp-route-myformid="@Model.question.MyFormId"><strong>QUESTION</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>EDIT</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post">
+                        <input asp-for="question.Id" hidden />
+                        <div class="mb-3">
+                            <label asp-for="question.QuestionText"></label>
+                            <input asp-for="question.QuestionText" class="form-control" class="form-control" />
+                            <span asp-validation-for="question.QuestionText" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="question.QuestionDescription"></label>
+                            <input asp-for="question.QuestionDescription" class="form-control" class="form-control" />
+                            <span asp-validation-for="question.QuestionDescription" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="question.Type"></label>
+                            <input asp-for="question.Type" value="@Model.question.Type" id="question_Type" readonly="true" />
+                        </div>
+                        <input asp-for="question.IsRequired" class="form-check-input" hidden />
+                        <div class="mb-3" id="extensionField">
+                            <input asp-for="question.Extension" class="form-check-input" />
+                            <label asp-for="question.Extension"></label>
+                            <span asp-validation-for="question.Extension" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <input asp-for="question.MyFormId" class="form-control" hidden />
+                        </div>
+                        <div class="mb-3">
+                            <input asp-for="question.CreatedAt" class="form-control" hidden />
+                        </div>
+                        <div class="mb-3">
+                            <input asp-for="question.OrderOfDisplay" class="form-control" hidden />
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/Edit.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>
+
+@*
+<div class="container-fluid p-0">
+	<br/>
+	<br/>
+	<h3 class="h3 d-inline align-middle">Edit Question</h3>
+	<br/>
+	<br/>
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        <input asp-for="question.Id" hidden />
+                        <div class="border p-3 mt-4">
+                            <div class="row pb-2">
+                                <h2 class="text-primary pl-3">Edit Question</h2>
+                                <hr />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="question.QuestionText"></label>
+                                <input asp-for="question.QuestionText" class="form-control" class="form-control" />
+                                <span asp-validation-for="question.QuestionText" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="question.QuestionDescription"></label>
+                                <input asp-for="question.QuestionDescription" class="form-control" class="form-control" />
+                                <span asp-validation-for="question.QuestionDescription" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="question.Type"></label>
+                                <input asp-for="question.Type" readonly="true"/>
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="question.IsRequired" class="form-check-input" />
+                                <label asp-for="question.IsRequired"></label>
+                                <span asp-validation-for="question.IsRequired" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="question.IsInUse" class="form-check-input" />
+                                <label asp-for="question.IsInUse"></label>
+                                <span asp-validation-for="question.IsInUse" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="question.Extension"></label>
+                                <input asp-for="question.Extension" class="form-control" class="form-control" />
+                                <span asp-validation-for="question.Extension" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="question.MyFormId" class="form-control" hidden />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="question.CreatedAt" class="form-control" hidden />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="question.OrderOfDisplay" class="form-control" hidden />
+                            </div>
+
+                            <div class="row justify-content-end">
+							    <div class="col-md-auto">
+                                     <a asp-page="Index" asp-route-myformid="@Model.question.MyFormId" class="btn btn-light bg-white btn-sm">Back</a>
+                                     <button type="submit"  class="btn btn-primary btn-sm">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            toggleExtensionVisibility();
+
+            $('#question_Type').change(function () {
+                toggleExtensionVisibility();
+            });
+
+            function toggleExtensionVisibility() {
+                var selectedTypeText = $('#question_Type').val();
+                var selectedType = ""
+                if (selectedTypeText === "radio") {
+                    selectedType = "1";
+                } else if (selectedTypeText === "list") {
+                    selectedType = "5";
+                } else {
+                    selectedType = "";
+                }
+                console.log("selectedType", selectedType)
+                var extensionField = $('#extensionField');
+                console.log("extensionField", extensionField)
+
+                // please check Question Model. QuestionType: radio is position 1 and list is position 5
+                if (selectedType === "1") {
+                    extensionField.show();
+                } else if (selectedType === "5") {
+                    extensionField.show();
+                } else {
+                    extensionField.hide();
+                }
+            }
+        });
+    </script>
+}

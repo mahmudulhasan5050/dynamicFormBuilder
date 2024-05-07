@@ -1,0 +1,52 @@
+﻿@page
+@model FormWizard.Pages.QuestionConditionOptions.DeleteModel
+@{
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle" >
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="Index" asp-route-questionconditionid="@Model.questionConditionOption.QuestionConditionId"
+                                       asp-route-questionid="@Model.questionId"
+                                       asp-route-myformid="@Model.myFormId"><strong>OPTIONS</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>DELETE</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post">
+                        <input asp-for="questionConditionOption.Id" hidden />
+                        <input asp-for="questionConditionOption.QuestionConditionId" hidden />
+                        <div class="border p-3 mt-4">
+                            <div class="mb-3">
+                                <label asp-for="questionConditionOption.ConditionOptionText"></label>
+                                <input asp-for="questionConditionOption.ConditionOptionText" class="form-control" />
+                                <span asp-validation-for="questionConditionOption.ConditionOptionText" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="questionConditionOption.OptionValue"></label>
+                                <input asp-for="questionConditionOption.OptionValue" class="form-control" />
+                                <span asp-validation-for="questionConditionOption.OptionValue" class="text-danger"></span>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-md-auto">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/Delete.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>

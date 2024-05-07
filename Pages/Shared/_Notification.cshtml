@@ -1,0 +1,52 @@
+﻿@if (TempData["success"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/app.js"></script>
+
+    @if (TempData["success"] != null)
+    {
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/app.js"></script>
+        <div id="success-toast" class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    @TempData["success"]
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var successToast = new bootstrap.Toast(document.getElementById('success-toast'));
+                successToast.show();
+            });
+        </script>
+    }
+
+
+
+
+
+
+    @if (TempData["error"] != null)
+    {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/app.js"></script>
+        <div id="success-toast" class="toast align-items-center text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    @TempData["error"]
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var successToast = new bootstrap.Toast(document.getElementById('success-toast'));
+                successToast.show();
+            });
+        </script>
+    }
+}

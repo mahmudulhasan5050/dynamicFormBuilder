@@ -1,0 +1,440 @@
+﻿@page
+@model FormWizard.Pages.Surveys.EditModel
+@{
+   
+}
+
+<br />
+<br />
+<br />
+<br />
+<div class="container p-3">
+    <form method="post">
+        <input asp-for="answer.Id" />
+
+        <input asp-for="answer.QuestionId" value="@Model.currentQuestion.Id" />
+        <input asp-for="answer.Value" value="@Model.currentQuestion.Value" />
+        <input asp-for="answer.MyFormId" value="@Model.myFormId" />
+
+
+        <div class="row">
+            <div class="col-xl-6 col-xxl-6 mx-auto">
+                <br/>
+                <br />
+                <br />
+                <div class="card border border-1 px-0 d-flex flex-column" style="padding-left: 30px; padding-right: 30px;box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);">
+                    @*Question Type "Text"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.text)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <br />
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-parent="#collapseCard" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <input asp-for="answer.QuestionAnswer" type="@Model.currentQuestion.Type" class="form-control" />
+                                    <span asp-validation-for="answer.QuestionAnswer" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*Question type "Radio"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.radio)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample2">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+
+                                    @foreach (var option in Model.questionOptions)
+                                    {
+
+                                        <div class="form-check">
+                                            <label asp-for="SelectedRadioButtonAnswer" class="form-check-label">@option.OptionText</label>
+                                            <input asp-for="SelectedRadioButtonAnswer" class="form-check-input" type="radio" value="@option.OptionText" id="@option.OptionText" />
+                                        </div>
+
+                                    }
+                                    <span asp-validation-for="answer.QuestionAnswer" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*--------------------------------------------------------------------Condition questions for radio button----------------------------------------------------------------------*@
+                        <div id="questionsContainer">
+                            @if (Model.answerConditions != null)
+                            {
+                                for (var i = 0; i < Model.answerConditions.Count; i++)
+                                {
+                                    @switch (Model.answerConditions[i].QuestionCondition.Type)
+                                    {
+                                        case FormWizard.Model.QuestionCondition.QuestionType.text:
+                                            <input asp-for="answerConditions[i].QuestionConditionId" value="@Model.answerConditions[i].QuestionConditionId" />
+                                            <input asp-for="answerConditions[i].MyFormId" value="@Model.myFormId" />
+                                            <input asp-for="@Model.currentQuestionIndex" value="@Model.currentQuestionIndex" />
+                                            <input asp-for="answerConditions[i].Id" value="@Model.answerConditions[i].Id"/>
+                                        @*    <input name="AnswerConditionForRadioButtonOption_@Model.answerConditions[i].QuestionCondition.Value" value="@Model.answerConditions[i].QuestionCondition.Value" />*@
+                                       
+
+                                            <div class="questionConditionClassJS" data-choice="@Model.answerConditions[i].QuestionCondition.Value">
+                                                <div class="card-header" style="background-color: #A91E00;">
+                                                    <h5 class="card-title text-white mt-2 text-center">
+                                                        <label>@Model.answerConditions[i].QuestionCondition.QuestionText</label>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body d-flex" style="padding-left: 30px; padding-right: 30px;">
+                                                    <div class="align-self-center w-100">
+                                                        <div class="mb-3">
+                                                          
+                                                            <input asp-for="answerConditions[i].ConditionAnswer" type="text" class="form-control" />
+                                                            <span asp-validation-for="answerConditions[i].ConditionAnswer" class="text-danger"></span>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            break;
+
+                                        case FormWizard.Model.QuestionCondition.QuestionType.radio:
+                                            <input asp-for="answerConditions[i].QuestionConditionId" value="@Model.answerConditions[i].QuestionConditionId" />
+
+                                            <input asp-for="answerConditions[i].MyFormId" value="@Model.myFormId" />
+                                            <input asp-for="@Model.currentQuestionIndex" value="@Model.currentQuestionIndex" />
+                                            <input asp-for="answerConditions[i].Id" value="@Model.answerConditions[i].Id"/>
+                                           @* <input asp-for="AnswerConditionForRadioButtonOption" value="@Model.answerConditions[i].QuestionCondition.Value" />*@
+
+                                            <div class="questionConditionClassJS" data-choice="@Model.answerConditions[i].QuestionCondition.Value">
+                                                <div class="card-header" style="background-color: #A91E00;">
+                                                    <h5 class="card-title text-white mt-2 text-center">
+                                                        <label>@Model.answerConditions[i].QuestionCondition.QuestionText</label>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body d-flex" style="padding-left: 50px; padding-right: 50px;">
+                                                    <div class="align-self-center w-100">
+                                                        <div class="mb-3">
+                                                            @foreach (var conditionOption in Model.questionConditionOptions)
+                                                            {
+                                                                if (conditionOption.QuestionConditionId == Model.answerConditions[i].QuestionConditionId)
+                                                                {
+
+                                                                    <div class="form-check">
+                                                                        <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                        <input asp-for="answerConditions[i].ConditionAnswer"
+                                                                               name="SelectedRadioButtonAnswerCondition_@Model.questionConditions[i].Id"
+                                                                               class="form-check-input"
+                                                                               type="radio"
+                                                                               value="@conditionOption.ConditionOptionText" />
+
+
+                                                                    </div>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="SelectedRadioButtonAnswerCondition_@Model.questionConditions[i].Id" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            break;
+                                        case FormWizard.Model.QuestionCondition.QuestionType.checkbox:
+                                            <input asp-for="answerConditions[i].QuestionConditionId" value="@Model.answerConditions[i].QuestionConditionId" />
+
+                                            <input asp-for="answerConditions[i].MyFormId" value="@Model.myFormId" />
+                                            <input asp-for="@Model.currentQuestionIndex" value="@Model.currentQuestionIndex" />
+                                            <input asp-for="answerConditions[i].Id" value="@Model.answerConditions[i].Id" />
+                                      @*      <input name="AnswerConditionForRadioButtonOption_@Model.answerConditions[i].QuestionCondition.Value" value="@Model.answerConditions[i].QuestionCondition.Value" />*@
+
+                                            <div class="questionConditionClassJS" data-choice="@Model.answerConditions[i].QuestionCondition.Value">
+                                                <div class="card-header" style="background-color: #A91E00;">
+                                                    <h5 class="card-title text-white mt-2 text-center">
+                                                        <label>@Model.answerConditions[i].QuestionCondition.QuestionText</label>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body d-flex" style="padding-left: 50px; padding-right: 50px;">
+                                                    <div class="align-self-center w-100">
+                                                        <div class="mb-3">
+                                                            @foreach (var conditionOption in Model.questionConditionOptions)
+                                                            {
+                                                                if (conditionOption.QuestionConditionId == Model.questionConditions[i].Id)
+                                                                {
+                                                                    <div class="form-check">
+                                                                        <label class="form-check-label">@conditionOption.ConditionOptionText</label>
+                                                                        <input class="form-check-input"
+                                                                               type="checkbox"
+                                                                               value="@conditionOption.ConditionOptionText"
+                                                                               name="SelectedCheckboxButtonAnswerCondition_@Model.questionConditions[i].Id" />
+                                                                    </div>
+                                                                }
+                                                            }
+                                                            @* <span asp-validation-for="SelectedCheckboxConditionAnswers" class="text-danger"></span>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            break;
+                                        case FormWizard.Model.QuestionCondition.QuestionType.number:
+                                            <input asp-for="answerConditions[i].QuestionConditionId" value="@Model.answerConditions[i].QuestionConditionId" />
+
+                                            <input asp-for="answerConditions[i].MyFormId" value="@Model.myFormId" />
+                                            <input asp-for="@Model.currentQuestionIndex" value="@Model.currentQuestionIndex" />
+                                            <input asp-for="answerConditions[i].Id" value="@Model.answerConditions[i].Id" />
+                              @*              <input name="AnswerConditionForRadioButtonOption_@Model.answerConditions[i].QuestionCondition.Value" value="@Model.answerConditions[i].QuestionCondition.Value" />*@
+
+                                            <div class="questionConditionClassJS" data-choice="@Model.answerConditions[i].QuestionCondition.Value">
+                                                <div class="card-header" style="background-color: #A91E00;">
+                                                    <h5 class="card-title text-white mt-2 text-center">
+                                                        <label>@Model.answerConditions[i].QuestionCondition.QuestionText</label>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body d-flex" style="padding-left: 50px; padding-right: 50px;">
+                                                    <div class="align-self-center w-100">
+                                                        <div class="mb-3">
+                                                            <input asp-for="answerConditions[i].ConditionAnswer" type="number" class="form-control" />
+                                                            <span asp-validation-for="answerConditions[i].ConditionAnswer" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            break;
+                                        case FormWizard.Model.QuestionCondition.QuestionType.date:
+                                            <input asp-for="answerConditions[i].QuestionConditionId" value="@Model.answerConditions[i].QuestionConditionId" />
+
+                                            <input asp-for="answerConditions[i].MyFormId" value="@Model.myFormId" />
+                                            <input asp-for="@Model.currentQuestionIndex" value="@Model.currentQuestionIndex" />
+                                            <input asp-for="answerConditions[i].Id" value="@Model.answerConditions[i].Id" />
+                           @*                 <input name="AnswerConditionForRadioButtonOption_@Model.answerConditions[i].QuestionCondition.Value" value="@Model.answerConditions[i].QuestionCondition.Value" />*@
+
+                                            <div class="questionConditionClassJS" data-choice="@Model.answerConditions[i].QuestionCondition.Value">
+                                                <div class="card-header" style="background-color: #A91E00;">
+                                                    <h5 class="card-title text-white mt-2 text-center">
+                                                        <label>@Model.answerConditions[i].QuestionCondition.QuestionText</label>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body d-flex" style="padding-left: 50px; padding-right: 50px;">
+                                                    <div class="align-self-center w-100">
+                                                        <div class="mb-3">
+                                                            <input asp-for="answerConditions[i].ConditionAnswer" type="date" class="form-control" />
+                                                            <span asp-validation-for="answerConditions[i].ConditionAnswer" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            break;
+                                        default:
+                                            <div></div>
+                                            break;
+                                    }
+
+
+                                }
+                            }
+                        </div>
+                    }
+                    @*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*@
+
+                    @*Question type "Checkbox"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.checkbox)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample3">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+                                    @foreach (var option in Model.questionOptions)
+                                    {
+
+                                        <div class="form-check">
+                                            <label class="form-check-label">@option.OptionText</label>
+                                            <input class="form-check-input"
+                                           type="checkbox"
+                                           value="@option.OptionText"
+                                           name="SelectedCheckboxAnswers"
+                                           checked="@(Model.SelectedCheckboxAnswers.Contains(option.OptionText) ? true : false)" />
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*Question Type "number"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.number)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample4">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+                                    <input asp-for="answer.QuestionAnswer" type="@Model.currentQuestion.Type" class="form-control" />
+                                    <span asp-validation-for="answer.QuestionAnswer" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*Question Type "date"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.date)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample5">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+                                    <input asp-for="answer.QuestionAnswer" type="@Model.currentQuestion.Type" class="form-control" />
+                                    <span asp-validation-for="answer.QuestionAnswer" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    @*Question type "List"*@
+                    @if (Model.currentQuestion.Type == FormWizard.Model.Question.QuestionType.list)
+                    {
+                        <div class="card-body d-flex justify-content-center" style="padding-left: 30px; padding-right: 30px;">
+                            <div class="align-self-center w-100">
+                            <h5 class="card-title text-white mt-2 text-center">
+                                <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionText</label>
+                            </h5>
+                                <div class="mb-3">
+                                    <div class="d-flex" style="justify-content: flex-end;">
+                                        <button class="btn btn-facebook btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample6" aria-expanded="false" aria-controls="collapseExample6">
+                                            More info
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="collapseExample6">
+                                        <div class="card card-body">
+                                            <label asp-for="answer.QuestionAnswer">@Model.currentQuestion.QuestionDescription</label>
+                                        </div>
+                                    </div>
+                                    <select asp-for="answer.QuestionAnswer" asp-items="@(ViewData["ListItems"]as IEnumerable<SelectListItem>)">
+                                        <option disabled selected>--- Select Item ---</option>
+                                    </select>
+                                    <span asp-validation-for="answer.QuestionAnswer" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-left: 10px; padding-right: 10px;">
+            <div class="col-xl-6 col-xxl-6 d-flex justify-content-end mx-auto">
+                @if (Model.currentQuestion.OrderOfDisplay > 1)
+                {
+                    <input type="submit" name="Previous" value="Previous" class="btn btn-light bg-white btn-sm" />
+                    @* <a asp-page="Edit" asp-route-myformid="@Model.myFormId" asp-route-currentquestionindex="@Model.currentQuestionIndex" class="btn btn-primary btn-sm">Previous</a>*@
+                }
+                &nbsp
+                <input type="submit" name="Next" value="Next" class="btn btn-primary btn-sm" />
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        function showQuestions(selectedChoice) {
+            const questionConditionsJS = document.querySelectorAll('.questionConditionClassJS');
+            questionConditionsJS.forEach(question => {
+                const questionChoice = question.getAttribute('data-choice');
+                if (questionChoice === selectedChoice) {
+                    question.style.display = 'block';
+                } else {
+                    question.style.display = 'none';
+                }
+            });
+        }
+
+        // Get all radio buttons
+        const radioButtons = document.querySelectorAll('input[type=radio][name=SelectedRadioButtonAnswer]');
+        const selectElement = document.querySelector('select');
+
+
+        // radio button changes
+        radioButtons.forEach(radioButton => {
+            radioButton.addEventListener('change', function () {
+                const selectedChoice = document.querySelector('input[name="SelectedRadioButtonAnswer"]:checked').value;
+                showQuestions(selectedChoice);
+            });
+        });
+
+        if (selectElement) {
+            //select option
+            selectElement.addEventListener('change', function () {
+                const selectedChoice = selectElement.value;
+                showQuestions(selectedChoice);
+            });
+        }
+
+        const initialSelectedChoice = "@Model.answer?.QuestionAnswer" || "";
+        showQuestions(initialSelectedChoice);
+
+    </script>
+}

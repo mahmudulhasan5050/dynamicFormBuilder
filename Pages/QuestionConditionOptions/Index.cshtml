@@ -1,0 +1,90 @@
+﻿@page
+@model FormWizard.Pages.QuestionConditionOptions.IndexModel
+@{
+}
+
+<div class="container p-3">
+        <div class="row pt-4">
+        <div class="col-6">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle">
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="/QuestionConditions/Index" asp-route-questionid="@(ViewData["QuestionId"])" asp-route-myformid="@(ViewData["MyFormId"])"><strong>QUESTION CONDITION</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>OPTIONS</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <form method="post">
+                <a asp-page="Create" asp-route-questionconditionid="@(ViewData["QuestionConditionId"])" asp-route-questionid="@(ViewData["QuestionId"])" asp-route-myformid="@(ViewData["MyFormId"])" class="btn btn-facebook btn-sm">
+                    <i class="bi bi-plus-circle"></i>&nbsp;
+                    Create Question Condition Option
+                </a>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-borderless" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-primary">
+                                    Main Question
+                                </th>
+                                <th class="text-primary">
+                                    Condition Option
+                                </th>
+                                <th class="text-primary">
+                                    Value
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.questionConditionOptions)
+                            {
+                                <tr>
+                                    <td width="40%">
+                                        <strong>@obj.QuestionCondition.QuestionText</strong>
+                                    </td>
+                                    <td width="30%">
+                                        @obj.ConditionOptionText
+                                    </td>
+                                    <td width="10%">
+                                        @obj.OptionValue
+                                    </td>
+                                    <td width="20%">
+                                        <div>
+                                            <nav class="nav btn-group">
+                                                <a asp-page="Edit" asp-route-questionconditionoptionid="@obj.Id"
+                                                asp-route-questionid="@(ViewData["QuestionId"])"
+                                                   asp-route-myformid="@(ViewData["MyFormId"])"
+                                                class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil-square style=" font-size: 0.8rem; color: white;""></i>
+                                                    Edit
+                                                </a>
+                                                <a asp-page="Delete" asp-route-questionconditionoptionid="@obj.Id" asp-route-questionid="@(ViewData["QuestionId"])" asp-route-myformid="@(ViewData["MyFormId"])" class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash-fill style=" font-size: 0.8rem; color: white;""></i>
+                                                    Delete
+                                                </a>
+
+@*                                            @if (obj.Type == FormWizard.Model.Question.QuestionType.radio)
+                                            {
+                                            <a asp-page="/QuestionOptions/Index" asp-route-id="@obj.Id" asp-route-type="@obj.Type" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil-square style="font-size: 0.8rem; color: white;""></i>
+                                            Options
+                                            </a>
+                                            }*@
+                                            </nav>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

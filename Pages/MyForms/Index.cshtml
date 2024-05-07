@@ -1,0 +1,114 @@
+﻿@page
+@model FormWizard.Pages.MyForms.IndexModel
+@{
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="h2 d-inline align-middle" style="color: rgb(29, 82, 125);"> <strong>FORMS</strong></h2>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <form method="post">
+                <a class="btn btn btn-light bg-white btn-sm">
+                    <input type="checkbox" id="showAll" asp-for="ShowAll" />
+                    <label for="showAll">Show All</label>
+                </a>
+            </form>
+            &nbsp &nbsp
+            <a asp-page="create" class="btn btn-facebook btn-sm">
+                <i class="bi bi-plus-circle"></i>&nbsp;
+                Add Form
+            </a>
+        </div>
+    </div>
+	<div class="row mt-3">
+	    <div class="col-12">
+		    <div class="card" style="padding-left: 30px; padding-right: 30px;">
+			    <div class="card-body">
+                    <table class="table table-borderless" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-primary">
+                                  Name
+                                </th>
+                                <th class="text-primary">
+                                    Category
+                                </th>
+                                <th class="text-primary">
+                                    Country
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.myForm)
+                            {
+                                <tr>
+                                    <td class="text-muted" width="20%">
+                                        @obj.Name
+                                    </td>
+                                    <td class="text-muted" width="20%">
+                                        @obj.Category.Name
+                                    </td>
+                                    <td width="10%">
+                                        <img src="@obj.Country.FlagImage" class = "rounded-circle" alt="food pic" width="50px" height="50px" />
+                                    </td>
+                                    <td width="50%">
+                                        <div>
+                                            <nav class="nav btn-group">
+                                                <a asp-page="/Questions/Index" asp-route-myformid="@obj.Id" class="btn btn-sm btn-light bg-white">
+                                                    <i class="bi bi-question-circle" style="font-size: 0.8rem; color: black;"></i>
+                                                    &nbsp Questions
+                                                </a>
+                                                &nbsp &nbsp &nbsp
+                                                @*
+                                                <a asp-page="/QuestionView/Index" asp-route-myformid="@obj.Id" class="btn btn-sm btn-light bg-white">
+                                                    <i class="bi bi-eye" style="font-size: 0.8rem; color: black;"></i>
+                                                   &nbsp Preview
+                                                </a>
+                                                *@
+                                                <a asp-page="/Surveys/Index" asp-route-myformid="@obj.Id" class="btn btn-sm btn-light bg-white">
+                                                    <i class="bi bi-question-circle" style="font-size: 0.8rem; color: black;"></i>
+                                                    &nbsp Survey
+                                                </a>
+                                                &nbsp &nbsp &nbsp
+                                                <a asp-page="Edit" asp-route-myformid="@obj.Id" class="btn btn-sm btn-primary">
+                                                    <i class="bi bi-pencil-square" style="font-size: 0.8rem; color: white;"></i>
+                                                    &nbsp Edit
+                                                </a>
+                                                &nbsp &nbsp &nbsp
+                                                <a asp-page="/Answers/Index" asp-route-myformid="@obj.Id" class="btn btn-sm btn-facebook">
+                                                    <i class="bi bi-pencil-square" style="font-size: 0.8rem; color: white;"></i>
+                                                    &nbsp Results
+                                                </a>
+                                                &nbsp &nbsp &nbsp
+                                                <a asp-page="Delete" asp-route-myformid="@obj.Id" class="btn btn-sm btn-danger" hidden>
+                                                    <i class="bi bi-trash-fill" style="font-size: 0.8rem; color: white;"></i>
+                                                    &nbsp Delete
+                                                </a>
+                                            </nav>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+        $(function (){
+            $("#showAll").change(function() {
+                $(this).closest('form').submit();
+            })
+        })
+    </script>
+}

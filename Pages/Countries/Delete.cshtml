@@ -1,0 +1,45 @@
+﻿@page
+@model FormWizard.Pages.Countries.DeleteModel
+@{
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-6">
+            <h2 class="h2 d-inline align-middle" style="color: rgb(29, 82, 125);"> <strong>DELETE COUNTRY</strong></h2>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post" enctype="multipart/form-data">
+                        <input hidden asp-for="country.Id" />
+                           @*<div asp-validation-summary="All"></div>*@
+                            <div class="mb-3">
+                                <label asp-for="country.Name"></label>
+                                <input asp-for="@Model.country.Name" type="text" disabled class="form-control" />
+                                <span asp-validation-for="country.Name" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="country.FlagImage"></label>
+                                <input type="file" id="uploadBox" name="file" hidden />
+                                &nbsp &nbsp &nbsp &nbsp
+                                <img src="@Model.country.FlagImage" class="rounded-circle" width="50px" height="50px" />
+                            </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-auto">
+                                <a asp-page="Index" class="btn btn-light bg-white btn-sm">Back</a>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/Delete.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>

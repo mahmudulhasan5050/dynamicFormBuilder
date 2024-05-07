@@ -1,0 +1,128 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <div style="padding-left: 180px; padding-right: 10px;">
+            <div class="text-center text-xxl-start mt-2">
+                <span class="badge text-bg-primary">Powered by FORMWIZZARD</span>
+                <h1 class="display-5 text-primary fw-light mb-3">DASHBOARD</h1>
+                <div class="row justify-content-start">
+                    <div class="col-md-auto">
+                        <form method="post">
+                            <div class="mb-3">
+                                <p class="text-muted">Are you new here? Before you start your survey, please make sure to fill this information</p>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">Category</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Here you can create different categories for your Form.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">Country</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Create different countries for your form, and add a flag.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">Participant</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Add a participant´s name and email before starting the survey
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">Form</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Here you can create a form, fill the form and get your form results by participant.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">Questions</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Add questions qith different types. This also includes different sets of sub-questions.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header px-4 pt-4">
+                                                <h5 class="card-title mb-0">User Information</h5>
+                                            </div>
+                                            <div class="card-body px-4 pt-2">
+                                                <p>
+                                                    Click in the "Hello..!" button to edit details from the main account.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted justify-content-end"><small>Know your way around? <a asp-page="/Surveys/Index" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Go to Survey</a></small></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 mt-12 text-center d-flex align-items-center">
+        <img src="~/images/Index.png" class="img-fluid m-auto mt-12 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+
+<script src="~/js/app.js"></script>
+
+<script src="~/js/datatables.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Datatables Orders
+        $("#datatables-orders").DataTable({
+            responsive: true,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1]
+            }]
+        });
+    });
+</script>

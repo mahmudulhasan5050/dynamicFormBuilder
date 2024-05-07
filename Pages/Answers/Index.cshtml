@@ -1,0 +1,58 @@
+﻿@page
+@model FormWizard.Pages.Answers.IndexModel
+@{
+}
+ 
+<div class="container p-0">
+    <div class="col-xl-6 col-xxl-6 mx-auto">
+        <div class="row pt-4">
+            <div class="col-12 d-flex justify-content-start">
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb d-flex justify-content-start  align-middle">
+                        <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="/MyForms/index"><strong>FORM</strong></a></li>
+                        <li class="breadcrumb-item h2"style="color: rgb(29, 82, 125);"><strong>RESULTS</strong></li>
+                        <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);text-transform:uppercase;"><strong>@Model.myFormName</strong></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var participantName in Model.participantIds){
+    <div class="col-xl-6 col-xxl-6 mx-auto">
+        <div class="card d-flex flex-column p-4">
+            <div class="card-header m-0" style="padding-left: 20px; padding-right: 20px;">
+                <h3 class="text-primary" style="color: rgb(29, 82, 125);text-transform:uppercase;"><strong>@participantName</strong></h3>
+            </div>
+            <div class="card-body d-flex justify-content-center" style="padding-left: 60px; padding-right: 60px;">
+                <div class="align-self-center w-100">
+                    @foreach (var answer in Model.answers)
+                    {
+                        @if (answer.Participant.Name == participantName)
+                        {
+                            <div class="mb-2">
+                                <h6 class="text-dark">@answer.Question.QuestionText</h6>
+                                <p class="font-weight-normal text-muted"><small>@answer.QuestionAnswer</small></p>
+                            </div>
+                            @if (answer.Question.Extension == true)
+                            {
+                                foreach (var answerCondition in Model.answerConditions)
+                                {
+                                    if (answer.QuestionId == answerCondition.QuestionCondition.QuestionId)
+                                    {
+                                        <div class="mb-2 ml-4">
+                                            <h6 class="text-dark">@answerCondition.QuestionCondition.QuestionText</h6>
+                                            <p class="font-weight-normal text-muted"><small>@answerCondition.ConditionAnswer</small></p>
+                                        </div>
+                                    }
+                                }
+                               
+                            
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

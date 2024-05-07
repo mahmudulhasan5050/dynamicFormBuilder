@@ -1,0 +1,41 @@
+﻿@page
+@model FormWizard.Pages.QuestionOptions.DeleteModel
+@{
+}
+
+<div class="row mt-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-start  align-middle" >
+                    <li class="breadcrumb-item h2" style="color: rgb(29, 82, 125);"><a asp-page="Index" asp-route-questionid="@(ViewData["QuestionId"])" asp-route-questiontype="@Model.questionOption.OptionType" asp-route-myformid="@(ViewData["MyFormId"])"><strong>QUESTION OPTIONS</strong></a></li>
+                    <li class="breadcrumb-item h2 active" aria-current="page" style="color: rgb(29, 82, 125);"><strong>DELETE</strong></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card p-3 mt-4">
+            <div class="card-body mt-2">
+                <section>
+                    <form method="post">
+                        <input hidden asp-for="questionOption.Id" />
+                        <input hidden asp-for="@(ViewData["MyFormId"])" />
+                        <div asp-validation-summary="All"></div>
+                        <div class="mb-3">
+                            <input asp-for="questionOption.OptionText" disabled class="form-control" />
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 text-center">
+        <img src="~/images/Delete.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>

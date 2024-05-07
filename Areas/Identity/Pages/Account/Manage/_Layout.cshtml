@@ -1,0 +1,46 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+<br/>
+<br/>
+<br/>
+<div class="row">
+    <br />
+    <br />
+    <div class="col-md-8">
+        <div class="card p-3">
+            <br />
+            <div class="card-header">
+                <h6 class="card-subtitle text-muted">Manage your account settings</h6>
+            </div>
+            <div class="card-body">
+                <div class="row"> <!-- Use a new row for the internal layout -->
+                    <div class="col-md-3">
+                        <partial name="_ManageNav" />
+                    </div>
+                    <div class="col-md-9"> <!-- Use col-md-10 to cover the remaining width -->
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <br />
+        <img src="~/images/User_Settings.png" class="img-fluid m-auto" alt="Responsive image" />
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

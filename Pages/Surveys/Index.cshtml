@@ -1,0 +1,39 @@
+﻿@page
+@model FormWizard.Pages.Surveys.IndexModel
+@{
+
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div style="padding-left: 90px; padding-right: 30px;">
+            <div class="text-center text-xxl-start mt-6">
+                <span class="badge text-bg-primary">Survey by FORMWIZZARD</span>
+                <h1 class="display-5 text-primary fw-light mb-3">Find out the answers to all of your questions.</h1>
+                <div class="row justify-content-start">
+                    <div class="col-md-auto">
+                        <form method="post">
+                            <div class="mb-3">
+                                <p class="text-muted">Select the person who will be answering the survey</p>
+                                <select class="form-control mb-3" asp-for="participantId" asp-items="@( ViewData["ParticipantList"] as IEnumerable<SelectListItem>)">
+                                    <option disabled selected>--- Select Participant ---</option>
+                                </select>
+                                <p class="text-muted"><small>Only one answer registered per participant. If you wish to add a participant, <a asp-page="/Participants/Create" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">click here</a></small></p>
+                            </div>
+                            <button type="submit" class="btn btn-facebook">Start Survey</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 text-center">
+        <img src="~/undraw_To_the_moon_re_q21i.png" class="img-fluid m-auto mt-2 display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>
+<style>
+    body {
+        background-color: white;
+    }
+</style>

@@ -1,0 +1,61 @@
+﻿@page
+@model FormWizard.Pages.Surveys.ThankYouPageModel
+@{
+    Layout = null; // We're not using a layout for this page
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FormWizard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="~/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo.adminkit.io/charts-apexcharts.html" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">  @*Do not Delete (Jessica)*@
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> @*for dragndrop*@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div style="padding-left: 120px; padding-right: 30px;">
+            <div class="text-center text-xxl-start">
+                <div class="fs-5 fw-bolder mt-8" style="color: rgb(29, 82, 125);">Survey by FORMWIZZARD</div>
+                <h1 class="display-5 text-muted fw-light mb-5">Thank you!</h1>
+                <div class="row justify-content-end">
+                    <div class="col-md-auto">
+                        <a asp-page="/MyForms/Index" class="btn btn-danger btn-sm">Go to Forms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 text-center">
+        <br />
+        <br />
+        <img src="~/undraw_Happy_news_re_tsbd.png" class="img-fluid m-auto display-flex justify-content-start" alt="Responsive image" />
+    </div>
+</div>
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+
+
+@**@
